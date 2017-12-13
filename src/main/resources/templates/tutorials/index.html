@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+            <meta charset="utf-8"/>
+            <title>All the tutorials</title>
+        </head>
+    <body>
+        <h2>All the tutorials</h2>
+        <a href="/tutorials/add">Add a tutorial</a>
+        <p th:text="${#lists.size(tutorials)} + ' Tutorials'" />
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Done</th>
+                <th></th>
+            </tr>
+            <tr th:each="tutorial : ${tutorials}" th:class="${tutorialStat.odd}? 'odd'">
+                <td th:text="${tutorial.name}"></td>
+                <td th:text="${tutorial.url}"></td>
+                <td th:text="${tutorial.done}? 'Done' : 'Todo'">Todo</td>
+                <td>
+                    <a th:href="@{/tutorials/edit(id=${tutorial.id})}">Edit</a>
+                    <form th:action="@{/tutorials/delete}" method="post">
+                        <input type="hidden" name="id" th:value="${tutorial.id}" />
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
