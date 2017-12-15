@@ -14,8 +14,13 @@ public class TutorialController {
     @Autowired
     private TutorialRepository tutorialRepository;
 
-    @GetMapping(path = "/")
+    @Autowired
+    private YAMLConfig myConfig;
+
+    @GetMapping()
     public String tutorialsIndex (Model model) {
+        System.out.println("using environment: " + myConfig.getEnvironment());
+        System.out.println("name: " + myConfig.getName());
         model.addAttribute("tutorials", tutorialRepository.findAll());
         return "tutorials/index";
     }
@@ -39,24 +44,24 @@ public class TutorialController {
         return "tutorials/edit";
     }
 
-    @PostMapping(path = "/")
+    @PostMapping()
     public RedirectView addTutorial(@ModelAttribute("tutorial") Tutorial t, RedirectAttributes attributes) {
         tutorialRepository.save(t);
         attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
-        return new RedirectView("/tutorials/");
+        return new RedirectView("/tutorials");
     }
 
 
     @PostMapping(path = "/update")
     public RedirectView updateTutorial(@ModelAttribute("tutorial") Tutorial t) {
         tutorialRepository.save(t);
-        return new RedirectView("/tutorials/");
+        return new RedirectView("/tutorials");
     }
 
     @PostMapping(path = "/delete")
     public RedirectView deleteTutorial(@RequestParam("id") int id, RedirectAttributes attributes) {
         tutorialRepository.delete(id);
         attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
-        return new RedirectView("/tutorials/");
+        return new RedirectView("/tutorials");
     }
 }
