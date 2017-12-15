@@ -28,7 +28,7 @@ public class MockitoAnnotationTest {
 
 
     @Test
-    public void whenUseMokedAnnotation_thenMockIsInjected() {
+    public void whenUseMockedAnnotation_thenMockIsInjected() {
         List<String> realList = new ArrayList<>();
         realList.add("one");
         mockedList.add("one");
